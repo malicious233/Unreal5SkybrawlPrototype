@@ -25,7 +25,7 @@ public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUsedSignature);
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FOnUsedSignature OnAttack;
+	FOnUsedSignature OnAttackInput;
 
 	/** Statemachine component for splitting up logic */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

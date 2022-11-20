@@ -11,13 +11,13 @@ void USB_NotifyState_FollowupWindow::NotifyBegin(USkeletalMeshComponent* MeshCom
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 	OwnerRef = Cast<ASkybrawlProject2022Character>(MeshComp->GetOwner());
-	OwnerRef->OnAttack.AddDynamic(this, &USB_NotifyState_FollowupWindow::PrepareFollowup);
+	OwnerRef->OnAttackInput.AddDynamic(this, &USB_NotifyState_FollowupWindow::PrepareFollowup);
 }
 
 void USB_NotifyState_FollowupWindow::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-	OwnerRef->OnAttack.RemoveDynamic(this, &USB_NotifyState_FollowupWindow::PrepareFollowup);
+	OwnerRef->OnAttackInput.RemoveDynamic(this, &USB_NotifyState_FollowupWindow::PrepareFollowup);
 }
 
 bool USB_NotifyState_FollowupWindow::ShouldFireInEditor()
