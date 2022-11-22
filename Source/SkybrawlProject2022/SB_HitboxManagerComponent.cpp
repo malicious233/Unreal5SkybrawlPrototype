@@ -34,3 +34,8 @@ void USB_HitboxManagerComponent::TickComponent(float DeltaTime, ELevelTick TickT
 	// ...
 }
 
+ASB_Hitbox* USB_HitboxManagerComponent::SpawnHitbox()
+{
+	GetWorld()->SpawnActor<ASB_Hitbox>(TSubclassOf<ASB_Hitbox>, FVector::Zero(), FQuat::Identity);
+}
+
