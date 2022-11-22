@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "SB_FSMState.h"
+#include "CharacterScripts/SB_DamagableInterface.h"
 #include "GameFramework/Character.h"
 #include "SkybrawlProject2022Character.generated.h"
 
@@ -63,8 +64,8 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	USB_FSMState* ActionState;
 	//
-
-
+	
+	
 	/**
 	 * @brief Returns to idle state if grounded and airborne if not grounded
 	 */

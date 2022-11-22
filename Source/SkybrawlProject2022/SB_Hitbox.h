@@ -16,17 +16,24 @@ public:
 	// Sets default values for this actor's properties
 	ASB_Hitbox();
 
-	//UFUNCTION(BlueprintPure)
-	//AActor* GetOwner();
+	UFUNCTION(BlueprintPure)
+	AActor* GetHitboxOwner();
 
-	UPROPERTY()
+	UFUNCTION(BlueprintCallable)
+	void SetHitboxOwner(AActor* NewOwner);
+
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UCapsuleComponent* CapsuleCollider;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	//UPROPERTY()
-	//AActor* Owner;
+	UPROPERTY()
+	AActor* HitboxOwner;
+
 	
 public:
 	// Called every frame

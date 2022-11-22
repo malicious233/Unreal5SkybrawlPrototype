@@ -36,6 +36,12 @@ void USB_HitboxManagerComponent::TickComponent(float DeltaTime, ELevelTick TickT
 
 ASB_Hitbox* USB_HitboxManagerComponent::SpawnHitbox()
 {
-	GetWorld()->SpawnActor<ASB_Hitbox>(TSubclassOf<ASB_Hitbox>, FVector::Zero(), FQuat::Identity);
+
+	//Perhaps warn if HitboxClass is not set, as it needs to be to not crash. Very careless programming I'm doing
+	const FTransform SpawnTransform = FTransform::Identity;
+	ASB_Hitbox* Hitbox = GetWorld()->SpawnActor<ASB_Hitbox>(HitboxClass, SpawnTransform);
+
+	Hitbox->SetHitboxOwner(GetOwner());
+	return Hitbox;
 }
 
