@@ -17,6 +17,9 @@ public:
 	// Sets default values for this component's properties
 	USB_HitboxManagerComponent();
 
+	UFUNCTION(BlueprintCallable)
+	void EndAttack();
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -25,10 +28,16 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 
+	UPROPERTY()
+	TArray<USB_HitboxGroup*> HitboxGroups;
+	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ASB_Hitbox> HitboxClass;
 	
 	UFUNCTION(BlueprintCallable)
 	ASB_Hitbox* SpawnHitbox();
+
+	UFUNCTION(BlueprintCallable)
+	ASB_Hitbox* SpawnGroupedHitbox(int GroupIndex);
 	
 };

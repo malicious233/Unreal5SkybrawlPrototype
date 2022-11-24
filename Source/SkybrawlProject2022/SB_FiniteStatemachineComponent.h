@@ -24,13 +24,22 @@ public:
 
 	UFUNCTION(BlueprintGetter)
 	USB_FSMState* GetState();
-	
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUsedSignature);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UPROPERTY()
 	USB_FSMState* CurrentState;
+
+	
+	
+	UPROPERTY()
+	TArray<FName> StateDelegateName;
+	UPROPERTY()
+	TArray<UObject*> StateDelegateObjectName;
 
 public:
 	// Called every frame

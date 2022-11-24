@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SB_HitboxGroup.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Actor.h"
 #include "SB_Hitbox.generated.h"
@@ -22,11 +23,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetHitboxOwner(AActor* NewOwner);
 
+	UFUNCTION(BlueprintCallable)
+	void EndHitbox();
+
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UCapsuleComponent* CapsuleCollider;
+
+	UPROPERTY()
+	USB_HitboxGroup* HitboxGroupRef;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

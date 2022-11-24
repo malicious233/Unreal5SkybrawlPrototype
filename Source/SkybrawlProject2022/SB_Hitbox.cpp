@@ -26,12 +26,32 @@ void ASB_Hitbox::SetHitboxOwner(AActor* NewOwner)
 	HitboxOwner = NewOwner;
 }
 
-void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void ASB_Hitbox::EndHitbox()
 {
+	Destroy();
+}
+
+void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+                                int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	
 	if (OtherActor->GetClass()->ImplementsInterface(USB_DamagableInterface::StaticClass()))
 	{
-		ISB_DamagableInterface::Execute_Damage(OtherActor, 5);
+		//Checks if the hitboxes group has hit this Actor before, if it hasnt, deal damage and add to the list.
+		bool HasHitBefore = false;
+		for (int i = 0; i < HitboxGroupRef->HitRef.Num(); i++)
+		{
+			if (OtherActor == HitboxGroupRef->HitRef[i])
+			{
+				HasHitBefore = true;
+			}
+		}
+		if (HasHitBefore == false)
+		{
+			ISB_DamagableInterface::Execute_Damage(OtherActor, 5);
+			HitboxGroupRef->HitRef.Add(OtherActor);
+		}
+		
 	}
 	/* //why this no work :(
 	ISB_DamagableInterface* Interface = Cast<ISB_DamagableInterface>(OtherActor);

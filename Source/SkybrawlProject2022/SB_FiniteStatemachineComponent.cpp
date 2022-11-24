@@ -18,6 +18,7 @@ void USB_FiniteStatemachineComponent::SetState(USB_FSMState* ToState)
 {
 	if (CurrentState != nullptr)
 	{
+		
 		CurrentState->Exit();
 		CurrentState->OnExit.Broadcast();
 	}
@@ -30,7 +31,6 @@ USB_FSMState* USB_FiniteStatemachineComponent::GetState()
 {
 	return CurrentState;
 }
-
 
 // Called when the game starts
 void USB_FiniteStatemachineComponent::BeginPlay()
