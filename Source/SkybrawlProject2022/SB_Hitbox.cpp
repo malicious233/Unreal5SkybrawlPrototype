@@ -5,6 +5,7 @@
 
 #include "CharacterScripts/SB_DamagableInterface.h"
 #include "GenericPlatform/GenericPlatformCrashContext.h"
+#include "UObject/ReferenceChainSearch.h"
 
 
 // Sets default values
@@ -37,7 +38,7 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 	
 	if (OtherActor->GetClass()->ImplementsInterface(USB_DamagableInterface::StaticClass()))
 	{
-		//Checks if the hitboxes group has hit this Actor before, if it hasnt, deal damage and add to the list.
+		//Checks if this hitboxes group  has hit this Actor before, if it hasnt, deal damage and add to the list, if it has hit, exit loop
 		bool HasHitBefore = false;
 		for (int i = 0; i < HitboxGroupRef->HitRef.Num(); i++)
 		{
@@ -48,8 +49,38 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 		}
 		if (HasHitBefore == false)
 		{
-			ISB_DamagableInterface::Execute_Damage(OtherActor, 5);
-			HitboxGroupRef->HitRef.Add(OtherActor);
+
+			//The SweepResult from OnOverlapBegin isnt populated with Impact location data so-
+			//-we do a second Spherical sweep to get an actual approximate FHitResult instead of an empty one.
+			TArray<FHitResult> AllResults;
+			
+			auto Start = GetActorLocation();
+			auto End = OtherComp->GetComponentLocation();
+			auto CollisionRadius = FVector::Dist(Start, End) * 1.1f;
+			
+			FCollisionQueryParams Param;
+			
+			GetWorld()->SweepMultiByObjectType(
+				AllResults,
+				Start,
+				End,
+				FQuat::Identity,
+				0,
+				FCollisionShape::MakeSphere(CollisionRadius),
+				Param
+				);
+
+			//Make sure we get check the collision for actually correct hit component
+			for (auto HitResult : AllResults)
+			{
+				if (OtherComp->GetUniqueID() == HitResult.GetComponent()->GetUniqueID()) {
+					ISB_DamagableInterface::Execute_DamagePoint(OtherActor, 5, HitResult); //We're doing a copy here, potentially wasteful?
+					HitboxGroupRef->HitRef.Add(OtherActor);
+					break;
+				}
+			}
+			
+			
 		}
 		
 	}

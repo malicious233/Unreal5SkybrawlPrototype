@@ -24,4 +24,7 @@ class SKYBRAWLPROJECT2022_API ISB_DamagableInterface
 public:
 	UFUNCTION(BlueprintNativeEvent, Category="Combat")
 	void Damage(float DamageAmount);
+
+	UFUNCTION(BlueprintNativeEvent, Category="Combat")
+	void DamagePoint(float DamageAmount, FHitResult HitResult); //Copying FHitResult might be potentially expensive?
 };

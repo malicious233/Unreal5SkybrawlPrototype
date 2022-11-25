@@ -16,13 +16,14 @@ USB_FiniteStatemachineComponent::USB_FiniteStatemachineComponent()
 
 void USB_FiniteStatemachineComponent::SetState(USB_FSMState* ToState)
 {
+	OnAnyStateExit.Broadcast();
 	if (CurrentState != nullptr)
 	{
-		
 		CurrentState->Exit();
 		CurrentState->OnExit.Broadcast();
 	}
 	CurrentState = ToState;
+	OnAnyStateEnter.Broadcast();
 	CurrentState->Enter();
 	CurrentState->OnEnter.Broadcast();
 }

@@ -17,26 +17,43 @@ public:
 	// Sets default values for this component's properties
 	USB_HitboxManagerComponent();
 
+	/**
+	 * @brief Resets HitboxGroups to avoid leaking memory
+	 */
 	UFUNCTION(BlueprintCallable)
 	void EndAttack();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	/**
+	 * @brief Array of references for hitboxgroups
+	 */
+	UPROPERTY()
+	TArray<USB_HitboxGroup*> HitboxGroups;
+	
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPROPERTY()
-	TArray<USB_HitboxGroup*> HitboxGroups;
 	
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ASB_Hitbox> HitboxClass;
-	
-	UFUNCTION(BlueprintCallable)
+
+	/**
+	 * @brief 
+	 * @return Spawns a hitbox. Currently Deprecated, use SpawnGroupedHitbox for now
+	 */
+	UFUNCTION()
 	ASB_Hitbox* SpawnHitbox();
 
+	/**
+	 * @brief Spawns a hitbox that is part of a group. Same indexes will count as 'one hit'
+	 * @param GroupIndex
+	 * @return
+	 */
 	UFUNCTION(BlueprintCallable)
 	ASB_Hitbox* SpawnGroupedHitbox(int GroupIndex);
 	

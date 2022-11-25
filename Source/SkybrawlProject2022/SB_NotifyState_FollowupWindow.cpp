@@ -11,6 +11,12 @@ void USB_NotifyState_FollowupWindow::NotifyBegin(USkeletalMeshComponent* MeshCom
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 	OwnerRef = Cast<ASkybrawlProject2022Character>(MeshComp->GetOwner());
+	if (OwnerRef->AttackInputBuffer > 0) //If buffering an attack input, immediately perform. This will need to be refactored in the future when we have multiple buttons for attacking
+	{
+		PrepareFollowup();
+		return;
+	}
+	
 	OwnerRef->OnAttackInput.AddDynamic(this, &USB_NotifyState_FollowupWindow::PrepareFollowup);
 }
 

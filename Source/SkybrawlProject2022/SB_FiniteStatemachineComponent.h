@@ -9,7 +9,8 @@
 
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-///@brief Component which acts like a finite statemachine. You can either override the states you're using or bind events to the state calls.
+///@brief Component which acts like a finite statemachine.
+///You can either override the states you're using or bind functions/BP custom events to the "OnX" delegates.
 ///Remember to instantiate your custom states on the Actor and then set one of those states on BeginPlay.
 class SKYBRAWLPROJECT2022_API USB_FiniteStatemachineComponent : public UActorComponent
 {
@@ -26,6 +27,11 @@ public:
 	USB_FSMState* GetState();
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUsedSignature);
+	UPROPERTY(BlueprintAssignable)
+	FOnUsedSignature OnAnyStateEnter;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnUsedSignature OnAnyStateExit;
 
 protected:
 	// Called when the game starts
@@ -34,12 +40,6 @@ protected:
 	UPROPERTY()
 	USB_FSMState* CurrentState;
 
-	
-	
-	UPROPERTY()
-	TArray<FName> StateDelegateName;
-	UPROPERTY()
-	TArray<UObject*> StateDelegateObjectName;
 
 public:
 	// Called every frame

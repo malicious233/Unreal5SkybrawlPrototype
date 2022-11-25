@@ -71,6 +71,9 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable)
 	void GoToIdleOrAirborne();
+
+	UPROPERTY(BlueprintReadWrite)
+	float AttackInputBuffer;
 	
 protected:
 
