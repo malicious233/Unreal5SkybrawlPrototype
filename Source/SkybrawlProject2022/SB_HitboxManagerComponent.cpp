@@ -60,19 +60,22 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	//If hitboxmanager dont have a group with this index, create a new one and assign the hitbox the new groupref.
 	//If it does exist assign the ref to the one we have, if GroupIndex int matches
 	bool DoesHaveGroup = false;
-	for (int i = 0; i > HitboxGroups.Num(); i++)
+	
+	for (int i = 0; i < HitboxGroups.Num(); i++)
 	{
-		if (HitboxGroups[i]->GroupIndex == GroupIndex)
+		if (HitboxGroups[i]->GroupIndex == GroupIndex) //We could change this to a dictionary where key is the GroupIndex and value the HitboxGroup
 		{
 			Hitbox->HitboxGroupRef = HitboxGroups[i];
 			DoesHaveGroup = true;
 			break;
+			
 		}
 	}
 	if (DoesHaveGroup == false)
 	{
 		USB_HitboxGroup* NewHitboxGroup = NewObject<USB_HitboxGroup>(GetOuter());
 		NewHitboxGroup->GroupIndex = GroupIndex;
+		
 		Hitbox->HitboxGroupRef = NewHitboxGroup;
 		HitboxGroups.Add(NewHitboxGroup);
 	}

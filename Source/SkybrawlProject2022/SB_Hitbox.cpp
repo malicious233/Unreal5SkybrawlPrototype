@@ -49,7 +49,6 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 		}
 		if (HasHitBefore == false)
 		{
-
 			//The SweepResult from OnOverlapBegin isnt populated with Impact location data so-
 			//-we do a second Spherical sweep to get an actual approximate FHitResult instead of an empty one.
 			TArray<FHitResult> AllResults;
