@@ -31,6 +31,9 @@ public:
 	/** Statemachine component for splitting up logic */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USB_FiniteStatemachineComponent* StatemachineComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class USB_HitboxManagerComponent* HitboxManagerComponent;
 	
 	ASkybrawlProject2022Character();
 

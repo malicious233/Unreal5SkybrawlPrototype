@@ -3,6 +3,7 @@
 #include "SkybrawlProject2022Character.h"
 
 #include "SB_FiniteStatemachineComponent.h"
+#include "SB_HitboxManagerComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -49,7 +50,12 @@ ASkybrawlProject2022Character::ASkybrawlProject2022Character()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	//Create a statemachine component
 	StatemachineComponent = CreateDefaultSubobject<USB_FiniteStatemachineComponent>(TEXT("StatemachineComponent"));
+
+	//Create a hitbox manager component
+	HitboxManagerComponent = CreateDefaultSubobject<USB_HitboxManagerComponent>(TEXT("HitboxmanagerComponent"));
+	
 	
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
