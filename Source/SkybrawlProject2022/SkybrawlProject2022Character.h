@@ -9,7 +9,7 @@
 #include "SkybrawlProject2022Character.generated.h"
 
 UCLASS(config=Game)
-class ASkybrawlProject2022Character : public ACharacter
+class ASkybrawlProject2022Character : public ACharacter, public ISB_DamagableInterface
 {
 	GENERATED_BODY()
 
