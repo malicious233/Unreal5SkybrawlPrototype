@@ -21,7 +21,10 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnUsedSignature OnHitboxEnd;
 
-	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
+	UPROPERTY(BlueprintReadWrite)
+	int HitboxGroupIndex;
 
+	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
+	
 	virtual bool ShouldFireInEditor() override;
 };

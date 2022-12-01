@@ -124,6 +124,19 @@ void ASkybrawlProject2022Character::GoToIdleOrAirborne()
 	}
 }
 
+void ASkybrawlProject2022Character::PerformAttack(UDataAsset_AttackData* AttackData)
+{
+	
+	StatemachineComponent->SetState(ActionState);
+	HitboxManagerComponent->CurrentAttackData = AttackData;
+	PlayAnimMontage(AttackData->Montage, 1, NAME_None);
+	GEngine->AddOnScreenDebugMessage(
+		INDEX_NONE,
+		1.0f,
+		FColor::Blue,
+		FString::Printf(TEXT("Test"))); //Printf returns a string
+}
+
 void ASkybrawlProject2022Character::MoveForward(float Value)
 {
 	if ((Controller != nullptr) && (Value != 0.0f))

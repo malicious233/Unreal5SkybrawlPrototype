@@ -4,6 +4,7 @@
 #include "SB_NotifyState_FollowupWindow.h"
 
 #include "SB_FiniteStatemachineComponent.h"
+#include "SB_HitboxManagerComponent.h"
 #include "SkybrawlProject2022Character.h"
 
 void USB_NotifyState_FollowupWindow::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
@@ -33,6 +34,7 @@ bool USB_NotifyState_FollowupWindow::ShouldFireInEditor()
 
 void USB_NotifyState_FollowupWindow::PrepareFollowup()
 {
-	OwnerRef->StatemachineComponent->SetState(OwnerRef->ActionState);
-	OwnerRef->PlayAnimMontage(MontageToPlay, 1, NAME_None);
+	//OwnerRef->StatemachineComponent->SetState(OwnerRef->ActionState);
+	
+	OwnerRef->PerformAttack(ActionData);
 }

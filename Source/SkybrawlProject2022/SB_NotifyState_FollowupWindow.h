@@ -20,6 +20,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	UAnimMontage* MontageToPlay;
+
+	UPROPERTY(EditAnywhere)
+	UDataAsset_AttackData* ActionData;
 	
 	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;

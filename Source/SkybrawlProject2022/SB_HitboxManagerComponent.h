@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DataAsset_AttackData.h"
 #include "SB_Hitbox.h"
 #include "Components/ActorComponent.h"
 #include "SB_HitboxManagerComponent.generated.h"
@@ -23,15 +24,33 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void EndAttack();
 
+	UPROPERTY(BlueprintReadOnly)
+	UDataAsset_AttackData* CurrentAttackData;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+
+	///
+	///Hitbox Related Variables
+	///
 	/**
 	 * @brief Array of references for hitboxgroups
 	 */
 	UPROPERTY()
 	TArray<USB_HitboxGroup*> HitboxGroups;
+
+	/**
+	 * @brief Reference to Attack data asset
+	 */
+	
+
+	/**
+	 * @brief Current hitbox in the AttackData asset we're reading data from
+	 */
+	UPROPERTY(BlueprintReadOnly)
+	int CurrentHitboxIndex;
 	
 public:
 	// Called every frame
@@ -40,7 +59,7 @@ public:
 
 	
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ASB_Hitbox> HitboxClass;
+	TSubclassOf<ASB_Hitbox> HitboxClass; //This should seriously be automatically set somewhere
 
 	/**
 	 * @brief 
@@ -49,8 +68,11 @@ public:
 	UFUNCTION()
 	ASB_Hitbox* SpawnHitbox();
 
+	
+
 	/**
-	 * @brief Spawns a hitbox that is part of a group. Same indexes will count as 'one hit'
+	 * @brief Spawns a hitbox that is part of a group. Spawning a hitbox during an action of the same indexes will count as 'one hit' while different indexes will allow hitting again
+	 * in other words, each index can hit only once per action.
 	 * @param GroupIndex
 	 * @return
 	 */

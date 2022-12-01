@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DataAsset_AttackData.h"
 #include "SB_FSMState.h"
 #include "CharacterScripts/SB_DamagableInterface.h"
 #include "GameFramework/Character.h"
@@ -74,6 +75,9 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable)
 	void GoToIdleOrAirborne();
+
+	UFUNCTION(BlueprintCallable)
+	void PerformAttack(UDataAsset_AttackData* AttackData);
 
 	UPROPERTY(BlueprintReadWrite)
 	float AttackInputBuffer;

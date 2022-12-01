@@ -16,7 +16,8 @@ USB_HitboxManagerComponent::USB_HitboxManagerComponent()
 
 void USB_HitboxManagerComponent::EndAttack()
 {
-	HitboxGroups.Empty();
+	HitboxGroups.Empty(); //Empty list of hitbox groups as not to keep adding data. Should we call clear instead or not?
+	CurrentHitboxIndex = 0; //Go back to the first hitbox index until the next action occurs
 }
 
 
@@ -55,15 +56,34 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	const FTransform SpawnTransform = FTransform::Identity;
 	ASB_Hitbox* Hitbox = GetWorld()->SpawnActor<ASB_Hitbox>(HitboxClass, SpawnTransform);
 
-	Hitbox->SetHitboxOwner(GetOwner());
+	//Give hitbox the right data
+	Hitbox->AttackData = CurrentAttackData; //Give the hitbox a reference to the data asset
+	Hitbox->CurrentHitboxIndex = CurrentHitboxIndex; //Tell the hitbox which index it should read hitbox position data from
 
+	const int HitboxInfoNum = CurrentAttackData->HitboxPositionInfos.Num();
+	if (HitboxInfoNum > CurrentHitboxIndex)
+	{
+		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[CurrentHitboxIndex].DamageIndex;
+		//Tell the hitbox which index it should read damage data from
+	}
+	else
+	{
+		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[HitboxInfoNum].DamageIndex;
+		//Tell the hitbox to read the last viable data from the array as not to possibly read out of bounds. Perhaps trigger a warning here
+		//to tell designers to have the right amount of entries in the AttackData asset.
+
+	}
+	
+	//Give hitbox a reference to who created the hitbox, being this Actor
+	Hitbox->SetHitboxOwner(GetOwner());
+	
 	//If hitboxmanager dont have a group with this index, create a new one and assign the hitbox the new groupref.
 	//If it does exist assign the ref to the one we have, if GroupIndex int matches
 	bool DoesHaveGroup = false;
 	
 	for (int i = 0; i < HitboxGroups.Num(); i++)
 	{
-		if (HitboxGroups[i]->GroupIndex == GroupIndex) //We could change this to a dictionary where key is the GroupIndex and value the HitboxGroup
+		if (HitboxGroups[i]->GroupIndex == GroupIndex) //We could change this to a dictionary where key is the GroupIndex and value the HitboxGroup to prevent this needless loop iteration
 		{
 			Hitbox->HitboxGroupRef = HitboxGroups[i];
 			DoesHaveGroup = true;
@@ -79,7 +99,9 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 		Hitbox->HitboxGroupRef = NewHitboxGroup;
 		HitboxGroups.Add(NewHitboxGroup);
 	}
-	//Perhaps warn if HitboxClass is not set, as it needs to be to not crash. Very careless programming I'm doing
+
+	CurrentHitboxIndex++; //Increment so next hitbox in the action gets the right data
+	
 	return Hitbox;
 }
 

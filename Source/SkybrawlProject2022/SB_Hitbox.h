@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DataAsset_AttackData.h"
 #include "SB_HitboxGroup.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Actor.h"
@@ -34,6 +35,12 @@ public:
 
 	UPROPERTY()
 	USB_HitboxGroup* HitboxGroupRef;
+
+	UPROPERTY()
+	UDataAsset_AttackData* AttackData;
+	int CurrentHitboxIndex; //Which hitbox it should pull data from
+	int CurrentDamageIndex; //Which damage index it should pull data from
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
