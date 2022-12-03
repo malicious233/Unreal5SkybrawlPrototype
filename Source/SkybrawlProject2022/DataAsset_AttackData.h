@@ -15,6 +15,9 @@ struct FHitboxPositionInfo
 {
 	GENERATED_BODY()
 
+	/**
+	 * @brief From which HitboxDamageInfos index it should pull damage data from
+	 */
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Damage")
 	int DamageIndex = 0;
 	
@@ -36,6 +39,12 @@ USTRUCT(BlueprintType)
 struct FHitboxDamageInfo
 {
 	GENERATED_BODY()
+
+	/**
+	 * @brief What group this hitbox will be part of. Each index can hit only once per action
+	 */
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Damage")
+	int HitboxGroupIndex = 0;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Damage")
 	float DamageAmount = 5;

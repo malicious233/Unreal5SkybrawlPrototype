@@ -64,15 +64,16 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	if (HitboxInfoNum > CurrentHitboxIndex)
 	{
 		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[CurrentHitboxIndex].DamageIndex;
-		//Tell the hitbox which index it should read damage data from
+		//Tell the hitbox which index it should read damage data from (the array in the AttackData datasset)
+		
 	}
 	else
 	{
 		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[HitboxInfoNum].DamageIndex;
 		//Tell the hitbox to read the last viable data from the array as not to possibly read out of bounds. Perhaps trigger a warning here
-		//to tell designers (in this case, me) to have the right amount of entries in the AttackData asset.
-
+		//to tell designers (in this case, me) to not try to get damage data out of range
 	}
+	
 	
 	//Give hitbox a reference to who created the hitbox, being this Actor
 	Hitbox->SetHitboxOwner(GetOwner());
@@ -83,7 +84,9 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	
 	for (int i = 0; i < HitboxGroups.Num(); i++)
 	{
-		if (HitboxGroups[i]->GroupIndex == GroupIndex) //We could change this to a dictionary where key is the GroupIndex and value the HitboxGroup to prevent this needless loop iteration
+		//if (HitboxGroups[i]->GroupIndex == GroupIndex)
+		//We're doing some rather deep Object nesting here. Maybe that's not a good idea to do all the time
+		if (HitboxGroups[i]->GroupIndex == Hitbox->AttackData->HitboxDamageInfos[Hitbox->CurrentDamageIndex].HitboxGroupIndex) //We could change this to a dictionary where key is the GroupIndex and value the HitboxGroup to prevent this needless loop iteration
 		{
 			Hitbox->HitboxGroupRef = HitboxGroups[i];
 			DoesHaveGroup = true;
@@ -94,7 +97,7 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	if (DoesHaveGroup == false)
 	{
 		USB_HitboxGroup* NewHitboxGroup = NewObject<USB_HitboxGroup>(GetOuter());
-		NewHitboxGroup->GroupIndex = GroupIndex;
+		NewHitboxGroup->GroupIndex = Hitbox->AttackData->HitboxDamageInfos[Hitbox->CurrentHitboxIndex].HitboxGroupIndex;
 		
 		Hitbox->HitboxGroupRef = NewHitboxGroup;
 		HitboxGroups.Add(NewHitboxGroup);
