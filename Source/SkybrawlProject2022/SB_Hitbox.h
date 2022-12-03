@@ -36,9 +36,13 @@ public:
 	UPROPERTY()
 	USB_HitboxGroup* HitboxGroupRef;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	UDataAsset_AttackData* AttackData;
+
+	UPROPERTY(BlueprintReadOnly)
 	int CurrentHitboxIndex; //Which hitbox it should pull data from
+
+	UPROPERTY(BlueprintReadOnly)
 	int CurrentDamageIndex; //Which damage index it should pull data from
 	
 protected:

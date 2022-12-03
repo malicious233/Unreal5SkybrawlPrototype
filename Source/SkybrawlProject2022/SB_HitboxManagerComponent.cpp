@@ -70,7 +70,7 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	{
 		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[HitboxInfoNum].DamageIndex;
 		//Tell the hitbox to read the last viable data from the array as not to possibly read out of bounds. Perhaps trigger a warning here
-		//to tell designers to have the right amount of entries in the AttackData asset.
+		//to tell designers (in this case, me) to have the right amount of entries in the AttackData asset.
 
 	}
 	

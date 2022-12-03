@@ -15,19 +15,19 @@ struct FHitboxPositionInfo
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category = "Damage")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Damage")
 	int DamageIndex = 0;
 	
-	UPROPERTY(EditAnywhere, Category = "Position")
-	FRotator RotationOffset = FRotator(90, 0, 0);
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Position")
+	FRotator RotationOffset = FRotator(0, 90, 0);
 
-	UPROPERTY(EditAnywhere, Category = "Position")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Position")
 	FVector LocalOffset = FVector::ZeroVector;
 
-	UPROPERTY(EditAnywhere, Category = "Size")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Size")
 	float Radius = 10.0;
 
-	UPROPERTY(EditAnywhere, Category = "Size")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Size")
 	float CapsuleHalfHeight = 10.f;
 	
 };
@@ -37,13 +37,13 @@ struct FHitboxDamageInfo
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category = "Damage")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Damage")
 	float DamageAmount = 5;
 	
-	UPROPERTY(EditAnywhere, Category = "Knockback")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Knockback")
 	FVector KnockbackDirection = FVector(1, 0, 0);
 
-	UPROPERTY(EditAnywhere, Category = "Knockback")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Knockback")
 	float KnockbackScalar = 1;
 	
 };
