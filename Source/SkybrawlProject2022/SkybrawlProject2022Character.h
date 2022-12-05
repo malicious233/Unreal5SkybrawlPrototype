@@ -30,6 +30,9 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FOnUsedSignature OnAttackInput;
 
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnUsedSignature OnDamage;
+
 	/** Statemachine component for splitting up logic */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USB_FiniteStatemachineComponent* StatemachineComponent;

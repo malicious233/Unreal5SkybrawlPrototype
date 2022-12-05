@@ -106,6 +106,7 @@ void ASkybrawlProject2022Character::BeginPlay()
 	AirborneState = NewObject<USB_FSMState>(this, AirborneStateClass);
 	HitstunState = NewObject<USB_FSMState>(this, HitstunStateClass);
 	ActionState = NewObject<USB_FSMState>(this, ActionStateClass);
+	LaunchedState = NewObject<USB_FSMState>(this, LaunchedStateClass);
 	
 	Super::BeginPlay();
 	

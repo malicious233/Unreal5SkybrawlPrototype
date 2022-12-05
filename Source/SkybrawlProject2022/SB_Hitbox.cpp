@@ -44,8 +44,9 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 	{
 		//Checks if this hitboxes group  has hit this Actor before, if it hasnt, deal damage and add to the list, if it has hit, exit loop
 		bool HasHitBefore = false;
-		for (int i = 0; i < HitboxGroupRef->HitRef.Num(); i++)
+		for (int i = 0; i < HitboxGroupRef->HitRef.Num(); i++) //TODO: An error occured here once, investigate later. Perhaps something can get GC'd at an unfortunate time...
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("%i = StringVariable"),HitboxGroupRef->HitRef.Num()));
 			if (OtherActor == HitboxGroupRef->HitRef[i])
 			{
 				HasHitBefore = true;
