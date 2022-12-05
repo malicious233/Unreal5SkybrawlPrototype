@@ -43,7 +43,29 @@ public:
 	int CurrentHitboxIndex; //Which hitbox it should pull data from
 
 	UPROPERTY(BlueprintReadOnly)
-	int CurrentDamageIndex; //Which damage index it should pull data from
+	int CurrentDamageIndex; //Which damage data array index it should pull data from
+
+	/**
+	 * @brief Returns the damage this hitbox deals, taken from the Data Asset
+	 * @return 
+	 */
+	UFUNCTION(BlueprintPure)
+	float GetHitboxDamage();
+
+	/**
+	 * @brief Get knockback direction from Data Asset, not taken player rotation into account
+	 * @return 
+	 */
+	UFUNCTION(BlueprintPure)
+	FVector GetKnockbackDirection();
+
+	/**
+	 * @brief Get Knockback scalar from Data asset
+	 * @return 
+	 */
+	UFUNCTION(BlueprintPure)
+	float GetKnockbackScalar();
+	
 	
 protected:
 	// Called when the game starts or when spawned

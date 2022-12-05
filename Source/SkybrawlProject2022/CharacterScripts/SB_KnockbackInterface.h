@@ -22,4 +22,6 @@ class SKYBRAWLPROJECT2022_API ISB_KnockbackInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	UFUNCTION(BlueprintNativeEvent,  Category = "Combat")
+	void ApplyKnockback(FVector KnockbackDirecton, float KnockbackScalar);
 };

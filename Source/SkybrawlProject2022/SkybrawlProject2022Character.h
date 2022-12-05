@@ -6,11 +6,12 @@
 #include "DataAsset_AttackData.h"
 #include "SB_FSMState.h"
 #include "CharacterScripts/SB_DamagableInterface.h"
+#include "CharacterScripts/SB_KnockbackInterface.h"
 #include "GameFramework/Character.h"
 #include "SkybrawlProject2022Character.generated.h"
 
 UCLASS(config=Game)
-class ASkybrawlProject2022Character : public ACharacter, public ISB_DamagableInterface
+class ASkybrawlProject2022Character : public ACharacter, public ISB_DamagableInterface, public ISB_KnockbackInterface
 {
 	GENERATED_BODY()
 
@@ -42,27 +43,38 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
 
-	//States
-	
-	UPROPERTY(EditDefaultsOnly)
+	///States, all these need to be set///
+
+	//Idle
+	UPROPERTY(EditDefaultsOnly, Category = "States")
 	TSubclassOf<USB_FSMState> IdleStateClass;
 
 	UPROPERTY(BlueprintReadOnly)
 	USB_FSMState* IdleState;
-	//
-	UPROPERTY(EditDefaultsOnly)
+	
+	// Airborne
+	UPROPERTY(EditDefaultsOnly, Category = "States")
 	TSubclassOf<USB_FSMState> AirborneStateClass;
 
 	UPROPERTY(BlueprintReadOnly)
 	USB_FSMState* AirborneState;
-	//
-	UPROPERTY(EditDefaultsOnly)
+	
+	// Hitstunned
+	UPROPERTY(EditDefaultsOnly, Category = "States")
 	TSubclassOf<USB_FSMState> HitstunStateClass;
 
 	UPROPERTY(BlueprintReadOnly)
 	USB_FSMState* HitstunState;
-	//
-	UPROPERTY(EditDefaultsOnly)
+
+	// Launched
+	UPROPERTY(EditDefaultsOnly, Category = "States")
+	TSubclassOf<USB_FSMState> LaunchedStateClass;
+	
+	UPROPERTY(BlueprintReadOnly)
+	USB_FSMState* LaunchedState;
+	
+	// Action (or attacking, synonymous)
+	UPROPERTY(EditDefaultsOnly, Category = "States")
 	TSubclassOf<USB_FSMState> ActionStateClass;
 	
 	UPROPERTY(BlueprintReadOnly)

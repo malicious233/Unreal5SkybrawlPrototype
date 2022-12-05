@@ -96,6 +96,9 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	}
 	if (DoesHaveGroup == false)
 	{
+		//If the group with this index didnt exist in the hitboxmanagers list, instantiate a new one
+		//This might perhaps be abusing the poor Garbage collector, so perhaps a pooling system-
+		//-alongside with pooling the HitboxActors themselves would be optimal
 		USB_HitboxGroup* NewHitboxGroup = NewObject<USB_HitboxGroup>(GetOuter());
 		NewHitboxGroup->GroupIndex = Hitbox->AttackData->HitboxDamageInfos[Hitbox->CurrentHitboxIndex].HitboxGroupIndex;
 		
@@ -103,7 +106,7 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 		HitboxGroups.Add(NewHitboxGroup);
 	}
 
-	CurrentHitboxIndex++; //Increment so next hitbox in the action gets the right data
+	CurrentHitboxIndex++; //Increment so next hitbox in the action montage gets the right data
 	
 	return Hitbox;
 }
