@@ -99,7 +99,7 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 						
 							FVector KnockbackVector = GetHitboxOwner()->GetActorRightVector() * KnockbackDirection.Y + GetHitboxOwner()->GetActorForwardVector() * KnockbackDirection.X;
 							KnockbackVector.Z = GetKnockbackDirection().Z;
-							//KnockbackVector.Normalize();
+							//KnockbackVector.Normalize(); //TODO: This makes the knockback quite odd. Evaluate on if I should keep this
 						
 							ISB_KnockbackInterface::Execute_ApplyKnockback(OtherActor, KnockbackVector, GetKnockbackScalar());
 						}
