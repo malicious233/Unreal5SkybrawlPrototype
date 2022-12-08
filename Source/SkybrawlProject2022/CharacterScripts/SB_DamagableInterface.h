@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SkybrawlProject2022/SB_AttackHit.h"
 #include "UObject/Interface.h"
 #include "SB_DamagableInterface.generated.h"
 
@@ -23,7 +24,7 @@ class SKYBRAWLPROJECT2022_API ISB_DamagableInterface
 	
 public:
 	UFUNCTION(BlueprintNativeEvent, Category="Combat")
-	void Damage(float DamageAmount);
+	void Damage(FSB_AttackHit AttackHit, FHitResult HitResult);
 
 	UFUNCTION(BlueprintNativeEvent, Category="Combat")
 	void DamagePoint(float DamageAmount, FHitResult HitResult); //Copying FHitResult might be potentially expensive?

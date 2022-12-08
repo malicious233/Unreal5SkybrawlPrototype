@@ -3,6 +3,7 @@
 
 #include "SB_Hitbox.h"
 
+#include "SB_AttackHit.h"
 #include "CharacterScripts/SB_DamagableInterface.h"
 #include "CharacterScripts/SB_KnockbackInterface.h"
 #include "GenericPlatform/GenericPlatformCrashContext.h"
@@ -79,35 +80,29 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 			{
 				if (OtherComp->GetUniqueID() == HitResult.GetComponent()->GetUniqueID()) {
 					//Apply damage
-
 					
-					ISB_DamagableInterface::Execute_DamagePoint(OtherActor, 5, HitResult); //We're doing a copy here, potentially wasteful?
+					FSB_AttackHit NewAttackHitStruct;
 
-					//Check if the thing you hit also has a knockback interface.
-					//TODO: Caveat here is that you can only apply knockback to things you can damage
-					if (OtherActor->GetClass()->ImplementsInterface(USB_KnockbackInterface::StaticClass()))
-					{
-						if (GetHitboxOwner() == nullptr) //If I dont have an owner, for example if I'm a summoned damage field, use the hitboxes forward
-						{
-							//TODO: Insert owner-less knockback calculation
-						}
-						else //If I have a owner, use the direction of the player as the knockback direction
-						{
-							FVector PlayerForward = GetHitboxOwner()->GetActorForwardVector();
-							FVector KnockbackDirection = GetKnockbackDirection();
-							KnockbackDirection.Z = 0;
-							KnockbackDirection.Normalize();
+					//Set Knockbackdirection and scalar
+					FVector PlayerForward = GetHitboxOwner()->GetActorForwardVector();
+					FVector KnockbackDirection = GetKnockbackDirection();
+					KnockbackDirection.Z = 0;
+					KnockbackDirection.Normalize();
 						
-							FVector KnockbackVector = GetHitboxOwner()->GetActorRightVector() * KnockbackDirection.Y + GetHitboxOwner()->GetActorForwardVector() * KnockbackDirection.X;
-							KnockbackVector.Z = GetKnockbackDirection().Z;
-							//KnockbackVector.Normalize(); //TODO: This makes the knockback quite odd. Evaluate on if I should keep this
-						
-							ISB_KnockbackInterface::Execute_ApplyKnockback(OtherActor, KnockbackVector, GetKnockbackScalar());
-						}
-						
-					}
+					FVector KnockbackVector = GetHitboxOwner()->GetActorRightVector() * KnockbackDirection.Y + GetHitboxOwner()->GetActorForwardVector() * KnockbackDirection.X;
+					KnockbackVector.Z = GetKnockbackDirection().Z;
+					//KnockbackVector.Normalize(); //TODO: This makes the knockback quite odd. Evaluate on if I should keep this
 					
+					NewAttackHitStruct.KnockbackScalar = GetKnockbackScalar();
+					NewAttackHitStruct.KnockbackDirection = KnockbackVector;
+					//Set damage
+					NewAttackHitStruct.Damage = GetHitboxDamage();
+
+					NewAttackHitStruct.bIsLauncher = GetbIsLauncher();
+					
+					ISB_DamagableInterface::Execute_Damage(OtherActor, NewAttackHitStruct, HitResult); //We're copying the hitresult again here. Not sure if this is the best idea
 					HitboxGroupRef->HitRef.Add(OtherActor);
+					
 					break;
 				}
 			}
@@ -152,6 +147,11 @@ FVector ASB_Hitbox::GetKnockbackDirection()
 float ASB_Hitbox::GetKnockbackScalar()
 {
 	return AttackData->HitboxDamageInfos[CurrentDamageIndex].KnockbackScalar;
+}
+
+bool ASB_Hitbox::GetbIsLauncher()
+{
+	return AttackData->HitboxDamageInfos[CurrentDamageIndex].bIsLauncher;
 }
 
 // Called when the game starts or when spawned

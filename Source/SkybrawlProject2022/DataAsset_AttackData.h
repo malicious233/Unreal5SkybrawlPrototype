@@ -54,6 +54,9 @@ struct FHitboxDamageInfo
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Knockback")
 	float KnockbackScalar = 1;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Damage")
+	bool bIsLauncher = 0;
 	
 };
 UCLASS(Blueprintable, BlueprintType)

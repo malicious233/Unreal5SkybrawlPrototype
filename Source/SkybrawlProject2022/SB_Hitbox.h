@@ -65,6 +65,9 @@ public:
 	 */
 	UFUNCTION(BlueprintPure)
 	float GetKnockbackScalar();
+
+	UFUNCTION(BlueprintPure)
+	bool GetbIsLauncher();
 	
 	
 protected:
