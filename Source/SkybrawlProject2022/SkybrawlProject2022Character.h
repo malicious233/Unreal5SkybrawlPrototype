@@ -31,7 +31,13 @@ public:
 	FOnUsedSignature OnAttackInput;
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnUsedSignature OnEvadeInput;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FOnUsedSignature OnDamage;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnUsedSignature OnTryDodge;
 
 	/** Statemachine component for splitting up logic */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
