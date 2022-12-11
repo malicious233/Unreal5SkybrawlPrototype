@@ -25,5 +25,5 @@ bool USB_NotifyState_DodgeWindow::ShouldFireInEditor()
 
 void USB_NotifyState_DodgeWindow::PrepareDodge()
 {
-	OwnerRef->OnTryDodge.Broadcast(); //Keeps the logic outside of the NotifyState. TODO: Do the same for Followup Window
+	OwnerRef->OnTryDodge.Broadcast(); //Keeps the logic outside of the NotifyState, though perhaps this isn't the best implementation. TODO: Do the same for Followup Window
 }
