@@ -28,5 +28,8 @@ public:
 	virtual bool ShouldFireInEditor() override;
 	
 	UFUNCTION()
-	void PrepareDodge();
+	void PrepareDodge(); //this might be removed
+
+	UFUNCTION()
+	void Dodge(EButtonInput ButtonInput);
 };

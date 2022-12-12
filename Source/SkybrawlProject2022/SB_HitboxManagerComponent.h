@@ -27,6 +27,12 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	UDataAsset_AttackData* CurrentAttackData;
 
+	/**
+	 * @brief Current hitbox in the AttackData asset we're reading data from
+	 */
+	UPROPERTY(BlueprintReadOnly)
+	int CurrentHitboxIndex;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -46,11 +52,8 @@ protected:
 	 */
 	
 
-	/**
-	 * @brief Current hitbox in the AttackData asset we're reading data from
-	 */
-	UPROPERTY(BlueprintReadOnly)
-	int CurrentHitboxIndex;
+	
+
 	
 public:
 	// Called every frame

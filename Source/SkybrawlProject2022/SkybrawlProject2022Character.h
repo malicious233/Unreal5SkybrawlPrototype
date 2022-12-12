@@ -10,6 +10,16 @@
 #include "GameFramework/Character.h"
 #include "SkybrawlProject2022Character.generated.h"
 
+
+UENUM(BlueprintType)
+enum class EButtonInput : uint8
+{
+	NONE,
+	LIGHT,
+	HEAVY,
+	DODGE,
+};
+
 UCLASS(config=Game)
 class ASkybrawlProject2022Character : public ACharacter, public ISB_DamagableInterface, public ISB_KnockbackInterface
 {
@@ -26,7 +36,11 @@ class ASkybrawlProject2022Character : public ACharacter, public ISB_DamagableInt
 public:
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUsedSignature);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUsedSignatureOneParam, EButtonInput, ButtonInput);
 
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnUsedSignatureOneParam OnInput; //On any bufferable action input
+	
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FOnUsedSignature OnAttackInput;
 
@@ -52,8 +66,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Input)
 	float TurnRateGamepad;
 
-	///States, all these need to be set///
-
+	///States, all the StateClasses need to be set///
+	//TODO: Make the state objects only settable by the HitboxManagerComponent (via making it a friend)
 	//Idle
 	UPROPERTY(EditDefaultsOnly, Category = "States")
 	TSubclassOf<USB_FSMState> IdleStateClass;
@@ -89,6 +103,9 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	USB_FSMState* ActionState;
 	//
+
+	UPROPERTY(BlueprintReadWrite)
+	float InputBufferDuration = 0.2;
 	
 	
 	/**
@@ -100,11 +117,31 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PerformAttack(UDataAsset_AttackData* AttackData);
 
-	UPROPERTY(BlueprintReadWrite)
-	float AttackInputBuffer;
+	//Input Functions
+	
+	UFUNCTION(BlueprintPure, Category="Input")
+	EButtonInput GetLastBufferedInput();
+
+	UFUNCTION(BlueprintPure, Category="Input")
+	float GetInputBufferDuration();
 	
 protected:
 
+	UPROPERTY()
+	float LastInputBuffer;
+
+	/** Call before any bufferable actions**/
+	void AnyActionInput(EButtonInput ButtonInput);
+	
+	/** Called on light attack inputs**/
+	void LightInput();
+
+	/** Called on heavy attack inputs**/
+	void HeavyInput();
+
+	/** Called on dodge inputs**/
+	void DodgeInput();
+	
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
 
@@ -123,10 +160,15 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 
+	UPROPERTY()
+	EButtonInput LastBufferedInput;
 
 protected:
 
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
+	
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	// End of APawn interface

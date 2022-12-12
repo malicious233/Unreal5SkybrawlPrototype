@@ -66,6 +66,7 @@ ASkybrawlProject2022Character::ASkybrawlProject2022Character()
 
 void ASkybrawlProject2022Character::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
+	
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
 	//PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
@@ -81,8 +82,10 @@ void ASkybrawlProject2022Character::SetupPlayerInputComponent(class UInputCompon
 	PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &ASkybrawlProject2022Character::TurnAtRate);
 	PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &ASkybrawlProject2022Character::LookUpAtRate);
-
-
+	PlayerInputComponent->BindAction("Dodge", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::DodgeInput);
+	PlayerInputComponent->BindAction("Heavy", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::HeavyInput);
+	PlayerInputComponent->BindAction("Light", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::LightInput);
+	
 }
 
 void ASkybrawlProject2022Character::TurnAtRate(float Rate)
@@ -102,7 +105,7 @@ void ASkybrawlProject2022Character::BeginPlay()
 	
 	// Instantiate your states before anything else
 	IdleState = NewObject<USB_FSMState>(this, IdleStateClass);
-	StatemachineComponent->SetState(IdleState);
+	StatemachineComponent->SetState(IdleState); //this might be redundant
 	AirborneState = NewObject<USB_FSMState>(this, AirborneStateClass);
 	HitstunState = NewObject<USB_FSMState>(this, HitstunStateClass);
 	ActionState = NewObject<USB_FSMState>(this, ActionStateClass);
@@ -110,6 +113,15 @@ void ASkybrawlProject2022Character::BeginPlay()
 	
 	Super::BeginPlay();
 	
+}
+
+void ASkybrawlProject2022Character::Tick(float DeltaSeconds)
+{
+
+	//Tick buffer
+	LastInputBuffer -= DeltaSeconds;
+	
+	Super::Tick(DeltaSeconds);
 }
 
 
@@ -127,15 +139,47 @@ void ASkybrawlProject2022Character::GoToIdleOrAirborne()
 
 void ASkybrawlProject2022Character::PerformAttack(UDataAsset_AttackData* AttackData)
 {
-	
-	StatemachineComponent->SetState(ActionState);
+	LastInputBuffer = 0; //Reset buffer duration
 	HitboxManagerComponent->CurrentAttackData = AttackData;
+	StatemachineComponent->SetState(ActionState);
 	PlayAnimMontage(AttackData->Montage, 1, NAME_None);
 	GEngine->AddOnScreenDebugMessage(
 		INDEX_NONE,
 		1.0f,
 		FColor::Blue,
 		FString::Printf(TEXT("Test"))); //Printf returns a string
+}
+
+EButtonInput ASkybrawlProject2022Character::GetLastBufferedInput()
+{
+	return LastBufferedInput;
+}
+
+float ASkybrawlProject2022Character::GetInputBufferDuration()
+{
+	return LastInputBuffer;
+}
+
+void ASkybrawlProject2022Character::AnyActionInput(EButtonInput ButtonInput)
+{
+	LastBufferedInput = ButtonInput;
+	LastInputBuffer = InputBufferDuration; //magic number, for now
+	OnInput.Broadcast(LastBufferedInput);
+}
+
+void ASkybrawlProject2022Character::LightInput()
+{
+	AnyActionInput(EButtonInput::LIGHT);
+}
+
+void ASkybrawlProject2022Character::HeavyInput()
+{
+	AnyActionInput(EButtonInput::HEAVY);
+}
+
+void ASkybrawlProject2022Character::DodgeInput()
+{
+	AnyActionInput(EButtonInput::DODGE);
 }
 
 void ASkybrawlProject2022Character::MoveForward(float Value)
