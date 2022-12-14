@@ -103,13 +103,22 @@ void ASkybrawlProject2022Character::LookUpAtRate(float Rate)
 void ASkybrawlProject2022Character::BeginPlay()
 {
 	
-	// Instantiate your states before anything else
+	// Instantiate your states before anything else, we give the states names too
 	IdleState = NewObject<USB_FSMState>(this, IdleStateClass);
+	IdleState->SetStateName(FString("Idle"));
 	StatemachineComponent->SetState(IdleState); //this might be redundant
+	
 	AirborneState = NewObject<USB_FSMState>(this, AirborneStateClass);
+	AirborneState->SetStateName(FString("Airborne"));
+	
 	HitstunState = NewObject<USB_FSMState>(this, HitstunStateClass);
+	HitstunState->SetStateName(FString("Hitstunned"));
+	
 	ActionState = NewObject<USB_FSMState>(this, ActionStateClass);
+	ActionState->SetStateName(FString("Action"));
+	
 	LaunchedState = NewObject<USB_FSMState>(this, LaunchedStateClass);
+	LaunchedState->SetStateName(FString("Launched"));
 	
 	Super::BeginPlay();
 	

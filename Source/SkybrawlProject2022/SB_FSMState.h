@@ -21,6 +21,11 @@ public:
 	USB_FSMState();
 
 	UFUNCTION(BlueprintPure)
+	FString GetStateName();
+	
+	void SetStateName(FString NewName);
+
+	UFUNCTION(BlueprintPure)
 	inline AActor* GetOwner();
 	
 	UFUNCTION(BlueprintNativeEvent)
@@ -59,6 +64,9 @@ public:
 private:
 	UPROPERTY()
 	AActor* Owner;
+
+	UPROPERTY()
+	FString StateName;
 	
 
 	

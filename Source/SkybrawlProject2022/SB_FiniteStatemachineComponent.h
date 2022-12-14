@@ -23,7 +23,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetState(USB_FSMState* ToState);
 
-	UFUNCTION(BlueprintGetter)
+	UFUNCTION(BlueprintPure)
 	USB_FSMState* GetState();
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUsedSignature);

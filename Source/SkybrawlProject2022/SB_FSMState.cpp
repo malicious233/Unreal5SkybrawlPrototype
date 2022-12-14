@@ -23,6 +23,17 @@ USB_FSMState::USB_FSMState()
 	Owner = Cast<AActor>(GetOuter());
 }
 
+FString USB_FSMState::GetStateName()
+{
+	return StateName; //copy :D
+}
+
+
+void USB_FSMState::SetStateName(FString NewName)
+{
+	StateName = NewName;
+}
+
 AActor* USB_FSMState::GetOwner()
 {
 	return Owner;
