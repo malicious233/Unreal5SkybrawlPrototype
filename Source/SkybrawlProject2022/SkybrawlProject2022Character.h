@@ -18,6 +18,7 @@ enum class EButtonInput : uint8
 	LIGHT,
 	HEAVY,
 	DODGE,
+	JUMP,
 };
 
 UCLASS(config=Game)
@@ -132,6 +133,12 @@ protected:
 
 	/** Call before any bufferable actions**/
 	void AnyActionInput(EButtonInput ButtonInput);
+
+	/** Called on jump inputs**/
+	void JumpInput();
+
+	/** Called on dodge inputs**/
+	void DodgeInput();
 	
 	/** Called on light attack inputs**/
 	void LightInput();
@@ -139,8 +146,7 @@ protected:
 	/** Called on heavy attack inputs**/
 	void HeavyInput();
 
-	/** Called on dodge inputs**/
-	void DodgeInput();
+	
 	
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);

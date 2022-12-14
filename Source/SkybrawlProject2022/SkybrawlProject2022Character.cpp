@@ -172,8 +172,13 @@ float ASkybrawlProject2022Character::GetInputBufferDuration()
 void ASkybrawlProject2022Character::AnyActionInput(EButtonInput ButtonInput)
 {
 	LastBufferedInput = ButtonInput;
-	LastInputBuffer = InputBufferDuration; //magic number, for now
+	LastInputBuffer = InputBufferDuration;
 	OnInput.Broadcast(LastBufferedInput);
+}
+
+void ASkybrawlProject2022Character::JumpInput()
+{
+	AnyActionInput(EButtonInput::JUMP);
 }
 
 void ASkybrawlProject2022Character::LightInput()

@@ -51,6 +51,7 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 			if (OtherActor == HitboxGroupRef->HitRef[i])
 			{
 				HasHitBefore = true;
+				break;
 			}
 		}
 		if (HasHitBefore == false)
