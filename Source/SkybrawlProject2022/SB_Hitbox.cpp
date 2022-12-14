@@ -47,7 +47,6 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 		bool HasHitBefore = false;
 		for (int i = 0; i < HitboxGroupRef->HitRef.Num(); i++) //TODO: An error occured here once, investigate later. Perhaps something can get GC'd at an unfortunate time, causing a crash...
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Yellow, FString::Printf(TEXT("%i = StringVariable"),HitboxGroupRef->HitRef.Num()));
 			if (OtherActor == HitboxGroupRef->HitRef[i])
 			{
 				HasHitBefore = true;
@@ -107,17 +106,8 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 					break;
 				}
 			}
-			
-			
 		}
-		
 	}
-	
-
-	
-	
-		
-	
 	/* //why this no work :(
 	ISB_DamagableInterface* Interface = Cast<ISB_DamagableInterface>(OtherActor);
 	if (Interface)
