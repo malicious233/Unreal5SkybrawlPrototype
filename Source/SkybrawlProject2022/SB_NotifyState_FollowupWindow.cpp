@@ -15,12 +15,13 @@ void USB_NotifyState_FollowupWindow::NotifyBegin(USkeletalMeshComponent* MeshCom
 
 	//checks if the buffer duration is over zero and if it is buffering a light attack
 	//TODO: The specific input should be configurable
+
+	
 	if (OwnerRef->GetInputBufferDuration() > 0 && OwnerRef->GetLastBufferedInput() == EButtonInput::LIGHT) //If buffering an attack input, immediately perform. This will need to be refactored in the future when we have multiple buttons for attacking
 	{
 		OwnerRef->PerformAttack(ActionData);
 		return;
 	}
-	
 	//OwnerRef->OnAttackInput.AddDynamic(this, &USB_NotifyState_FollowupWindow::PrepareFollowup);
 	OwnerRef->OnInput.AddDynamic(this, &USB_NotifyState_FollowupWindow::Followup);
 }
@@ -37,19 +38,14 @@ bool USB_NotifyState_FollowupWindow::ShouldFireInEditor()
 	return false;
 }
 
-void USB_NotifyState_FollowupWindow::PrepareFollowup()
-{
-	//OwnerRef->StatemachineComponent->SetState(OwnerRef->ActionState);
-	
-	OwnerRef->PerformAttack(ActionData);
-}
 
 void USB_NotifyState_FollowupWindow::Followup(EButtonInput ButtonInput)
 {
-	
-	if (ButtonInput != EButtonInput::LIGHT) //TODO: This should be configurable, it is what it is for now
+	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.5f, FColor::Yellow, TEXT("CALL!"));
+	if (ButtonInput == EButtonInput::LIGHT) //TODO: This should be configurable, it is what it is for now
 	{
-		return;
+		OwnerRef->PerformAttack(ActionData);
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.5f, FColor::Yellow, TEXT("Not buffered!"));	
 	}
-	OwnerRef->PerformAttack(ActionData);
+	
 }

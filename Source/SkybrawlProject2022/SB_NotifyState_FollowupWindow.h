@@ -30,9 +30,6 @@ public:
 	virtual bool ShouldFireInEditor() override;
 
 	UFUNCTION()
-	void PrepareFollowup(); //This might be removed
-
-	UFUNCTION()
 	void Followup(EButtonInput ButtonInput);
 
 	UPROPERTY()

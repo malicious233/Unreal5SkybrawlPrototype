@@ -85,6 +85,7 @@ void ASkybrawlProject2022Character::SetupPlayerInputComponent(class UInputCompon
 	PlayerInputComponent->BindAction("Dodge", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::DodgeInput);
 	PlayerInputComponent->BindAction("Heavy", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::HeavyInput);
 	PlayerInputComponent->BindAction("Light", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::LightInput);
+	PlayerInputComponent->BindAction("Jump", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::JumpInput);
 	
 }
 
@@ -119,6 +120,9 @@ void ASkybrawlProject2022Character::BeginPlay()
 	
 	LaunchedState = NewObject<USB_FSMState>(this, LaunchedStateClass);
 	LaunchedState->SetStateName(FString("Launched"));
+
+	//When entering any state, attempt to perform buffered input
+	StatemachineComponent->OnAnyStateEnterLate.AddDynamic(this, &ASkybrawlProject2022Character::PerformBuffer); 
 	
 	Super::BeginPlay();
 	
@@ -146,17 +150,21 @@ void ASkybrawlProject2022Character::GoToIdleOrAirborne()
 	}
 }
 
+//This should probably be named 'PerformAction'
 void ASkybrawlProject2022Character::PerformAttack(UDataAsset_AttackData* AttackData)
 {
 	LastInputBuffer = 0; //Reset buffer duration
 	HitboxManagerComponent->CurrentAttackData = AttackData;
 	StatemachineComponent->SetState(ActionState);
 	PlayAnimMontage(AttackData->Montage, 1, NAME_None);
-	GEngine->AddOnScreenDebugMessage(
-		INDEX_NONE,
-		1.0f,
-		FColor::Blue,
-		FString::Printf(TEXT("Test"))); //Printf returns a string
+}
+
+void ASkybrawlProject2022Character::PerformBuffer()
+{
+	if (LastInputBuffer > 0)
+	{
+		OnInput.Broadcast(LastBufferedInput);
+	}
 }
 
 EButtonInput ASkybrawlProject2022Character::GetLastBufferedInput()

@@ -31,6 +31,9 @@ public:
 	FOnUsedSignature OnAnyStateEnter;
 
 	UPROPERTY(BlueprintAssignable)
+	FOnUsedSignature OnAnyStateEnterLate;
+
+	UPROPERTY(BlueprintAssignable)
 	FOnUsedSignature OnAnyStateExit;
 
 protected:

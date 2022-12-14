@@ -39,17 +39,12 @@ public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUsedSignature);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUsedSignatureOneParam, EButtonInput, ButtonInput);
 
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FOnUsedSignatureOneParam OnInput; //On any bufferable action input
-	
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FOnUsedSignature OnAttackInput;
-
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FOnUsedSignature OnEvadeInput;
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FOnUsedSignature OnDamage;
+	
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnUsedSignatureOneParam OnInput; //On any bufferable action input
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FOnUsedSignature OnTryDodge;
@@ -105,8 +100,8 @@ public:
 	USB_FSMState* ActionState;
 	//
 
-	UPROPERTY(BlueprintReadWrite)
-	float InputBufferDuration = 0.2;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float InputBufferDuration = 0.3;
 	
 	
 	/**
@@ -119,6 +114,9 @@ public:
 	void PerformAttack(UDataAsset_AttackData* AttackData);
 
 	//Input Functions
+
+	UFUNCTION()
+	void PerformBuffer();
 	
 	UFUNCTION(BlueprintPure, Category="Input")
 	EButtonInput GetLastBufferedInput();

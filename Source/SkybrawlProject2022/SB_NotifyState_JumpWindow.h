@@ -4,29 +4,27 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotifyState.h"
-#include "SkybrawlProject2022Character.h"
 #include "UObject/Object.h"
-#include "SB_NotifyState_DodgeWindow.generated.h"
+#include "SB_NotifyState_JumpWindow.generated.h"
 
-
+enum class EButtonInput : uint8;
+class ASkybrawlProject2022Character;
 /**
  * 
  */
 UCLASS()
-class SKYBRAWLPROJECT2022_API USB_NotifyState_DodgeWindow : public UAnimNotifyState
+class SKYBRAWLPROJECT2022_API USB_NotifyState_JumpWindow : public UAnimNotifyState
 {
 	GENERATED_BODY()
-
 
 	UPROPERTY()
 	ASkybrawlProject2022Character* OwnerRef;
 
 	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
-public:
 
 	virtual bool ShouldFireInEditor() override;
 
 	UFUNCTION()
-	void Dodge(EButtonInput ButtonInput);
+	void Jump(EButtonInput ButtonInput);
 };
