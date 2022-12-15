@@ -17,7 +17,7 @@ void USB_NotifyState_FollowupWindow::NotifyBegin(USkeletalMeshComponent* MeshCom
 	//TODO: The specific input should be configurable
 
 	
-	if (OwnerRef->GetInputBufferDuration() > 0 && OwnerRef->GetLastBufferedInput() == EButtonInput::LIGHT) //If buffering an attack input, immediately perform. This will need to be refactored in the future when we have multiple buttons for attacking
+	if (OwnerRef->GetInputBufferDuration() > 0 && OwnerRef->GetLastBufferedInput() == FollowupInput) //If buffering an attack input, immediately perform. This will need to be refactored in the future when we have multiple buttons for attacking
 	{
 		OwnerRef->PerformAttack(ActionData);
 		return;
@@ -41,11 +41,9 @@ bool USB_NotifyState_FollowupWindow::ShouldFireInEditor()
 
 void USB_NotifyState_FollowupWindow::Followup(EButtonInput ButtonInput)
 {
-	GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.5f, FColor::Yellow, TEXT("CALL!"));
-	if (ButtonInput == EButtonInput::LIGHT) //TODO: This should be configurable, it is what it is for now
+	if (ButtonInput == FollowupInput) 
 	{
 		OwnerRef->PerformAttack(ActionData);
-		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.5f, FColor::Yellow, TEXT("Not buffered!"));	
 	}
 	
 }

@@ -67,8 +67,9 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 		//Tell the hitbox which index it should read damage data from (the array in the AttackData datasset)
 		
 	}
-	else
+	else 
 	{
+		//TODO: This is not working as intended as I am often getting crashes. Perhaps some data isnt being set right here
 		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[HitboxInfoNum].DamageIndex;
 		//Tell the hitbox to read the last viable data from the array as not to possibly read out of bounds. Perhaps trigger a warning here
 		//to tell designers (in this case, me) to not try to get damage data out of range
