@@ -69,8 +69,8 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	}
 	else 
 	{
-		//TODO: This is not working as intended as I am often getting crashes. Perhaps some data isnt being set right here
-		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[HitboxInfoNum].DamageIndex;
+		//TODO: Check if this still crashes when performing two upkicks at a very specific moment
+		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[HitboxInfoNum - 1].DamageIndex ;
 		//Tell the hitbox to read the last viable data from the array as not to possibly read out of bounds. Perhaps trigger a warning here
 		//to tell designers (in this case, me) to not try to get damage data out of range
 	}
