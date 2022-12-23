@@ -67,13 +67,14 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 		//Tell the hitbox which index it should read damage data from (the array in the AttackData datasset)
 		
 	}
-	else 
+	else
 	{
 		//TODO: Check if this still crashes when performing two upkicks at a very specific moment
 		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[HitboxInfoNum - 1].DamageIndex ;
 		//Tell the hitbox to read the last viable data from the array as not to possibly read out of bounds. Perhaps trigger a warning here
 		//to tell designers (in this case, me) to not try to get damage data out of range
 	}
+	
 	
 	
 	//Give hitbox a reference to who created the hitbox, being this Actor
