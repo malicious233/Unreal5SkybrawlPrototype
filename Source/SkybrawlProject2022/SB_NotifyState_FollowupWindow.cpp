@@ -38,6 +38,11 @@ bool USB_NotifyState_FollowupWindow::ShouldFireInEditor()
 	return false;
 }
 
+FString USB_NotifyState_FollowupWindow::GetNotifyName_Implementation() const
+{
+	return FString("Followup");
+}
+
 
 void USB_NotifyState_FollowupWindow::Followup(EButtonInput ButtonInput)
 {
