@@ -7,7 +7,7 @@
 #include "SB_AttackHit.generated.h"
 
 /**
- * 
+ * Struct which features info about a confirmed hit, used for the DamagableInterface
  */
 USTRUCT(BlueprintType)
 struct SKYBRAWLPROJECT2022_API FSB_AttackHit

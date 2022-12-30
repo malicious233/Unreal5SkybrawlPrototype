@@ -16,6 +16,9 @@ class SKYBRAWLPROJECT2022_API USB_NotifyState_CreateHitbox : public UAnimNotifyS
 	GENERATED_BODY()
 
 public:
+
+	//Most implementation for this is done in Blueprint
+	
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUsedSignature);
 
 	UPROPERTY(BlueprintAssignable)

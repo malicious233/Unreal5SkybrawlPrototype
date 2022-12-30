@@ -7,11 +7,7 @@
 // Sets default values for this component's properties
 USB_HitboxManagerComponent::USB_HitboxManagerComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
 void USB_HitboxManagerComponent::EndAttack()
@@ -20,14 +16,10 @@ void USB_HitboxManagerComponent::EndAttack()
 	CurrentHitboxIndex = 0; //Go back to the first hitbox index until the next action occurs
 }
 
-
 // Called when the game starts
 void USB_HitboxManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
 
@@ -36,8 +28,6 @@ void USB_HitboxManagerComponent::TickComponent(float DeltaTime, ELevelTick TickT
                                                FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
 ASB_Hitbox* USB_HitboxManagerComponent::SpawnHitbox()
@@ -72,10 +62,8 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 		//TODO: Check if this still crashes when performing two upkicks at a very specific moment
 		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[HitboxInfoNum - 1].DamageIndex ;
 		//Tell the hitbox to read the last viable data from the array as not to possibly read out of bounds. Perhaps trigger a warning here
-		//to tell designers (in this case, me) to not try to get damage data out of range
+		//to tell designers (in this case, me) to give the AttackData enough damage entries.
 	}
-	
-	
 	
 	//Give hitbox a reference to who created the hitbox, being this Actor
 	Hitbox->SetHitboxOwner(GetOwner());
@@ -86,7 +74,6 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	
 	for (int i = 0; i < HitboxGroups.Num(); i++)
 	{
-		//if (HitboxGroups[i]->GroupIndex == GroupIndex)
 		//We're doing some rather deep Object nesting here. Maybe that's not a good idea to do all the time
 		if (HitboxGroups[i]->GroupIndex == Hitbox->AttackData->HitboxDamageInfos[Hitbox->CurrentDamageIndex].HitboxGroupIndex) //We could change this to a dictionary where key is the GroupIndex and value the HitboxGroup to prevent this needless loop iteration
 		{
@@ -99,8 +86,8 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	if (DoesHaveGroup == false)
 	{
 		//If the group with this index didnt exist in the hitboxmanagers list, instantiate a new one
-		//This might perhaps be abusing the poor Garbage collector, so perhaps a pooling system-
-		//-alongside with pooling the HitboxActors themselves would be optimal
+		//This is abusing the poor Garbage collector, so perhaps a pooling system-
+		//-alongside with pooling the HitboxActors themselves would be optimal in the future
 		USB_HitboxGroup* NewHitboxGroup = NewObject<USB_HitboxGroup>(GetOuter());
 		NewHitboxGroup->GroupIndex = Hitbox->AttackData->HitboxDamageInfos[Hitbox->CurrentHitboxIndex].HitboxGroupIndex;
 		
@@ -108,7 +95,7 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 		HitboxGroups.Add(NewHitboxGroup);
 	}
 
-	CurrentHitboxIndex++; //Increment so next hitbox in the action montage gets the right data
+	CurrentHitboxIndex++; //Increment so next hitbox in the action montage gets new data
 	
 	return Hitbox;
 }

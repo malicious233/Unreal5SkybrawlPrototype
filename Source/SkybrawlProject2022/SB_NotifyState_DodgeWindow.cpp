@@ -15,7 +15,7 @@ void USB_NotifyState_DodgeWindow::NotifyBegin(USkeletalMeshComponent* MeshComp, 
 		return;
 	}
 	
-	//OwnerRef->OnEvadeInput.AddDynamic(this, &USB_NotifyState_DodgeWindow::PrepareDodge);
+	//Listen to inputs for the entire duration of the Dodge Window.
 	OwnerRef->OnInput.AddDynamic(this, &USB_NotifyState_DodgeWindow::Dodge);
 }
 

@@ -16,6 +16,7 @@ USB_FiniteStatemachineComponent::USB_FiniteStatemachineComponent()
 
 void USB_FiniteStatemachineComponent::SetState(USB_FSMState* ToState)
 {
+	//Call the functions and event dispatchers on switch
 	OnAnyStateExit.Broadcast();
 	if (CurrentState != nullptr)
 	{
@@ -23,7 +24,7 @@ void USB_FiniteStatemachineComponent::SetState(USB_FSMState* ToState)
 		CurrentState->OnExit.Broadcast();
 	}
 	CurrentState = ToState;
-
+	
 	OnAnyStateEnter.Broadcast();
 	CurrentState->Enter();
 	CurrentState->OnEnter.Broadcast();
@@ -40,9 +41,6 @@ USB_FSMState* USB_FiniteStatemachineComponent::GetState()
 void USB_FiniteStatemachineComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
 

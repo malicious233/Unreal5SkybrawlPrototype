@@ -9,13 +9,10 @@ void USB_FSMState::Tick_Implementation(float DeltaTime)
 
 void USB_FSMState::Enter_Implementation()
 {
-	//OnEnter.Broadcast();
-	//These dont work, but why?
 }
 
 void USB_FSMState::Exit_Implementation()
 {
-	//OnExit.Broadcast();
 }
 
 USB_FSMState::USB_FSMState()
@@ -25,7 +22,7 @@ USB_FSMState::USB_FSMState()
 
 FString USB_FSMState::GetStateName()
 {
-	return StateName; //copy :D
+	return StateName; 
 }
 
 

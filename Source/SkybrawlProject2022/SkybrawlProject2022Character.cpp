@@ -69,19 +69,15 @@ void ASkybrawlProject2022Character::SetupPlayerInputComponent(class UInputCompon
 	
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
-	//PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	//PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-
-	//PlayerInputComponent->BindAxis("Move Forward / Backward", this, &ASkybrawlProject2022Character::MoveForward);
-	//PlayerInputComponent->BindAxis("Move Right / Left", this, &ASkybrawlProject2022Character::MoveRight);
-
-	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
+	
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
 	PlayerInputComponent->BindAxis("Turn Right / Left Mouse", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("Turn Right / Left Gamepad", this, &ASkybrawlProject2022Character::TurnAtRate);
 	PlayerInputComponent->BindAxis("Look Up / Down Mouse", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("Look Up / Down Gamepad", this, &ASkybrawlProject2022Character::LookUpAtRate);
+
+	//Binding these events lets input buffer function
 	PlayerInputComponent->BindAction("Dodge", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::DodgeInput);
 	PlayerInputComponent->BindAction("Heavy", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::HeavyInput);
 	PlayerInputComponent->BindAction("Light", EInputEvent::IE_Pressed, this, &ASkybrawlProject2022Character::LightInput);
@@ -150,11 +146,11 @@ void ASkybrawlProject2022Character::GoToIdleOrAirborne()
 	}
 }
 
-//This should probably be named 'PerformAction'
+//This should probably be named 'PerformAction as it isnt exclusive to attacks'
 void ASkybrawlProject2022Character::PerformAttack(UDataAsset_AttackData* AttackData)
 {
-	LastInputBuffer = 0; //Reset buffer duration
-	HitboxManagerComponent->CurrentAttackData = AttackData;
+	LastInputBuffer = 0; //Reset buffer duration, might be redundant to do here.
+	HitboxManagerComponent->CurrentAttackData = AttackData; //Tell hitboxmanager which attack to pull data from.
 	StatemachineComponent->SetState(ActionState);
 	PlayAnimMontage(AttackData->Montage, 1, NAME_None);
 }

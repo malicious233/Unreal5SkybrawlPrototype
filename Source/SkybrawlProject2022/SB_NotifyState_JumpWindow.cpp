@@ -11,13 +11,14 @@ void USB_NotifyState_JumpWindow::NotifyBegin(USkeletalMeshComponent* MeshComp, U
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 	OwnerRef = Cast<ASkybrawlProject2022Character>(MeshComp->GetOwner());
 
+	//If we're input buffering jump as we enter the notifystate, perform jump 
 	if (OwnerRef->GetInputBufferDuration() > 0 && OwnerRef->GetLastBufferedInput() == EButtonInput::JUMP)
 	{
 		OwnerRef->Jump();
 		return;
 	}
 	
-	//OwnerRef->OnEvadeInput.AddDynamic(this, &USB_NotifyState_DodgeWindow::PrepareDodge);
+	//Listen to input during the entire duration of the Jump window.
 	OwnerRef->OnInput.AddDynamic(this, &USB_NotifyState_JumpWindow::Jump);
 }
 

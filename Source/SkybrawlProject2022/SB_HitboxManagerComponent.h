@@ -19,11 +19,14 @@ public:
 	USB_HitboxManagerComponent();
 
 	/**
-	 * @brief Resets HitboxGroups to avoid leaking memory
+	 * @brief Call when a characters attack usually ends. Resets HitboxGroups to avoid leaking memory
 	 */
 	UFUNCTION(BlueprintCallable)
 	void EndAttack();
 
+	/**
+	 * @brief Reference to a data asset, all spawned hitboxes will be passed a reference to this data asset.
+	 */
 	UPROPERTY(BlueprintReadOnly)
 	UDataAsset_AttackData* CurrentAttackData;
 
@@ -38,23 +41,16 @@ protected:
 	virtual void BeginPlay() override;
 
 
-	///
-	///Hitbox Related Variables
-	///
+
+	///Hitbox Related Variables///
+	
 	/**
 	 * @brief Array of references for hitboxgroups
 	 */
 	UPROPERTY()
 	TArray<USB_HitboxGroup*> HitboxGroups;
-
-	/**
-	 * @brief Reference to Attack data asset
-	 */
 	
 
-	
-
-	
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
@@ -62,7 +58,7 @@ public:
 
 	
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ASB_Hitbox> HitboxClass; //This should seriously be automatically set somewhere
+	TSubclassOf<ASB_Hitbox> HitboxClass; //This should automatically be set somewhere instead of being set in Blueprint.
 
 	/**
 	 * @brief 
@@ -74,8 +70,8 @@ public:
 	
 
 	/**
-	 * @brief Spawns a hitbox that is part of a group. Spawning a hitbox during an action of the same indexes will count as 'one hit' while different indexes will allow hitting again
-	 * in other words, each index can hit only once per action.
+	 * @brief Spawns a hitbox that is part of a group. Spawning a hitbox during an action of the same indexes will count as 'one hit' while different indexes will count as seperate hits.
+	 * in other words, each index can hit only once per attack, before EndAttack() is called.
 	 * @param GroupIndex
 	 * @return
 	 */

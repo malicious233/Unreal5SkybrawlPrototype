@@ -20,6 +20,10 @@ public:
 	// Sets default values for this component's properties
 	USB_FiniteStatemachineComponent();
 
+	/**
+	 * @brief Tells statemachine to switch state, calling the respective Enter and Exit events while we're at it.
+	 * @param ToState 
+	 */
 	UFUNCTION(BlueprintCallable)
 	void SetState(USB_FSMState* ToState);
 

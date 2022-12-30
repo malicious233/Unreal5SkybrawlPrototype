@@ -14,7 +14,7 @@ class USB_KnockbackInterface : public UInterface
 };
 
 /**
- * 
+ * THIS INTERFACE IS NOT BEING USED AT THE MOMENT
  */
 class SKYBRAWLPROJECT2022_API ISB_KnockbackInterface
 {

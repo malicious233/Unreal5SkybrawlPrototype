@@ -12,7 +12,7 @@ void USB_Notify_ExitAttack::Notify(USkeletalMeshComponent* MeshComp, UAnimSequen
 	if (MeshComp != NULL && MeshComp->GetOwner() != NULL)
 	{
 		
-		ASkybrawlProject2022Character* OwnerRef = Cast<ASkybrawlProject2022Character>(MeshComp->GetOwner()); //ugly
+		ASkybrawlProject2022Character* OwnerRef = Cast<ASkybrawlProject2022Character>(MeshComp->GetOwner()); //ugly casts here, perhaps this can be cached once instead of every time we meet this event.
 		OwnerRef->GoToIdleOrAirborne();
 	}
 	

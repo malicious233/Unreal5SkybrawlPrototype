@@ -14,22 +14,21 @@ void USB_NotifyState_FollowupWindow::NotifyBegin(USkeletalMeshComponent* MeshCom
 	OwnerRef = Cast<ASkybrawlProject2022Character>(MeshComp->GetOwner());
 
 	//checks if the buffer duration is over zero and if it is buffering a light attack
-	//TODO: The specific input should be configurable
 
-	
-	if (OwnerRef->GetInputBufferDuration() > 0 && OwnerRef->GetLastBufferedInput() == FollowupInput) //If buffering an attack input, immediately perform. This will need to be refactored in the future when we have multiple buttons for attacking
+	if (OwnerRef->GetInputBufferDuration() > 0 && OwnerRef->GetLastBufferedInput() == FollowupInput) //If buffering an input, perform immediately. Once we get to adding multi-button inputs this might be adjusted
 	{
 		OwnerRef->PerformAttack(ActionData);
 		return;
 	}
-	//OwnerRef->OnAttackInput.AddDynamic(this, &USB_NotifyState_FollowupWindow::PrepareFollowup);
+
+	//Listen for an event input event as long as we're inside the NotifyState
 	OwnerRef->OnInput.AddDynamic(this, &USB_NotifyState_FollowupWindow::Followup);
 }
 
 void USB_NotifyState_FollowupWindow::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-	//OwnerRef->OnAttackInput.RemoveDynamic(this, &USB_NotifyState_FollowupWindow::PrepareFollowup);
+	//Unsubscribe when we exit NotifyState
 	OwnerRef->OnInput.RemoveDynamic(this, &USB_NotifyState_FollowupWindow::Followup);
 }
 
