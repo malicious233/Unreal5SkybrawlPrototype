@@ -151,6 +151,7 @@ void ASkybrawlProject2022Character::PerformAttack(UDataAsset_AttackData* AttackD
 {
 	LastInputBuffer = 0; //Reset buffer duration, might be redundant to do here.
 	HitboxManagerComponent->CurrentAttackData = AttackData; //Tell hitboxmanager which attack to pull data from.
+	HitboxManagerComponent->CurrentHitboxIndex = 0;
 	StatemachineComponent->SetState(ActionState);
 	PlayAnimMontage(AttackData->Montage, 1, NAME_None);
 }

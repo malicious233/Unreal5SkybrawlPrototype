@@ -31,7 +31,7 @@ void USB_FSMState::SetStateName(FString NewName)
 	StateName = NewName;
 }
 
-AActor* USB_FSMState::GetOwner()
+AActor* USB_FSMState::GetStateOwner()
 {
 	return Owner;
 }

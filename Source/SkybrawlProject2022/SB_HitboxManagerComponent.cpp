@@ -12,6 +12,7 @@ USB_HitboxManagerComponent::USB_HitboxManagerComponent()
 
 void USB_HitboxManagerComponent::EndAttack()
 {
+	
 	HitboxGroups.Empty(); //Empty list of hitbox groups as not to keep adding data. Should we call clear instead or not?
 	CurrentHitboxIndex = 0; //Go back to the first hitbox index until the next action occurs
 }

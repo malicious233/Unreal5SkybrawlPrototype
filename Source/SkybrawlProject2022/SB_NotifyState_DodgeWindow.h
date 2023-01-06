@@ -25,7 +25,7 @@ class SKYBRAWLPROJECT2022_API USB_NotifyState_DodgeWindow : public UAnimNotifySt
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
 public:
 
-	virtual bool ShouldFireInEditor() override;
+	virtual bool ShouldFireInEditor();
 
 	UFUNCTION()
 	void Dodge(EButtonInput ButtonInput);

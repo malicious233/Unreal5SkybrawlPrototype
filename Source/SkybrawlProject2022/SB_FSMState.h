@@ -26,7 +26,7 @@ public:
 	void SetStateName(FString NewName);
 
 	UFUNCTION(BlueprintPure)
-	inline AActor* GetOwner();
+	AActor* GetStateOwner();
 	
 	UFUNCTION(BlueprintNativeEvent)
 	void Tick(float DeltaTime);

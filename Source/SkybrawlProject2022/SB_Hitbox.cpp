@@ -102,8 +102,9 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 					
 					ISB_DamagableInterface::Execute_Damage(OtherActor, NewAttackHitStruct, HitResult); //We're copying the hitresult again here. Not sure if this is the best idea
 					HitboxGroupRef->HitRef.Add(OtherActor);
-					
+					return;
 					break;
+					
 				}
 			}
 		}

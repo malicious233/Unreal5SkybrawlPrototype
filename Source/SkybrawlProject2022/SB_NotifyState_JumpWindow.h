@@ -23,7 +23,7 @@ class SKYBRAWLPROJECT2022_API USB_NotifyState_JumpWindow : public UAnimNotifySta
 	virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration) override;
 	virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
 
-	virtual bool ShouldFireInEditor() override;
+	virtual bool ShouldFireInEditor();
 
 	UFUNCTION()
 	void Jump(EButtonInput ButtonInput);

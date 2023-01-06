@@ -18,7 +18,7 @@ class SKYBRAWLPROJECT2022_API USB_Notify_ExitAttack : public UAnimNotify
 
 	//USB_Notify_ExitAttack();
 
-	virtual bool ShouldFireInEditor() override;
+	virtual bool ShouldFireInEditor();
 
 	UPROPERTY()
 	ASkybrawlProject2022Character* CharacterRef;
