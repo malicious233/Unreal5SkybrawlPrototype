@@ -33,6 +33,7 @@ public:
 	virtual bool ShouldFireInEditor();
 
 	virtual FString GetNotifyName_Implementation() const override;
+	
 
 	UFUNCTION()
 	void Followup(EButtonInput ButtonInput);

@@ -43,6 +43,8 @@ FString USB_NotifyState_FollowupWindow::GetNotifyName_Implementation() const
 }
 
 
+
+
 void USB_NotifyState_FollowupWindow::Followup(EButtonInput ButtonInput)
 {
 	if (ButtonInput == FollowupInput) 
