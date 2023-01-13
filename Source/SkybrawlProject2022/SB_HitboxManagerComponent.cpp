@@ -33,7 +33,6 @@ void USB_HitboxManagerComponent::TickComponent(float DeltaTime, ELevelTick TickT
 
 ASB_Hitbox* USB_HitboxManagerComponent::SpawnHitbox()
 {
-	
 	//Perhaps warn if HitboxClass is not set, as it needs to be to not crash. Very careless programming I'm doing
 	const FTransform SpawnTransform = FTransform::Identity;
 	ASB_Hitbox* Hitbox = GetWorld()->SpawnActor<ASB_Hitbox>(HitboxClass, SpawnTransform);
@@ -56,7 +55,6 @@ ASB_Hitbox* USB_HitboxManagerComponent::SpawnGroupedHitbox(int GroupIndex)
 	{
 		Hitbox->CurrentDamageIndex = CurrentAttackData->HitboxPositionInfos[CurrentHitboxIndex].DamageIndex;
 		//Tell the hitbox which index it should read damage data from (the array in the AttackData datasset)
-		
 	}
 	else
 	{
