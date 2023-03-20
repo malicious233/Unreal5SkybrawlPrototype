@@ -117,7 +117,10 @@ void ASkybrawlProject2022Character::BeginPlay()
 	LaunchedState = NewObject<USB_FSMState>(this, LaunchedStateClass);
 	LaunchedState->SetStateName(FString("Launched"));
 
-	//When entering any state, attempt to perform buffered input
+	KnockedDownState = NewObject<USB_FSMState>(this, KnockedDownStateClass);
+	KnockedDownState->SetStateName(FString("KnockedDown"));
+
+	//After entering any state, attempt to perform buffered input
 	StatemachineComponent->OnAnyStateEnterLate.AddDynamic(this, &ASkybrawlProject2022Character::PerformBuffer); 
 	
 	Super::BeginPlay();

@@ -91,6 +91,13 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly)
 	USB_FSMState* LaunchedState;
+
+	// KnockedDown
+	UPROPERTY(EditDefaultsOnly, Category = "States")
+	TSubclassOf<USB_FSMState> KnockedDownStateClass;
+
+	UPROPERTY(BlueprintReadOnly)
+	USB_FSMState* KnockedDownState;
 	
 	// Action (or attacking, synonymous)
 	UPROPERTY(EditDefaultsOnly, Category = "States")
