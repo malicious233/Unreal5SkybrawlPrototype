@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SB_AttackHit.h"
 #include "UObject/Object.h"
 #include "DataAsset_AttackData.generated.h"
 
@@ -57,6 +58,9 @@ struct FHitboxDamageInfo
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Damage")
 	bool bIsLauncher = 0;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Knockback")
+	TEnumAsByte<HitReaction> hitReaction;
 	
 };
 UCLASS(Blueprintable, BlueprintType)

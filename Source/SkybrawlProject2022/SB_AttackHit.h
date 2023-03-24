@@ -6,6 +6,15 @@
 #include "UObject/Object.h"
 #include "SB_AttackHit.generated.h"
 
+
+UENUM()
+enum HitReaction
+{
+	Standard, //Standard hitstun
+	None, //No reaction at all
+	Launch, //Sends them flying backwards
+	Pancake //Immediately puts them to a knocked down state
+};
 /**
  * Struct which features info about a confirmed hit, used for the DamagableInterface
  */
@@ -25,4 +34,7 @@ struct SKYBRAWLPROJECT2022_API FSB_AttackHit
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsLauncher;
+
+	UPROPERTY(BlueprintReadWrite)
+	TEnumAsByte<HitReaction> hitReaction = HitReaction::Standard;
 };
