@@ -99,6 +99,7 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 					NewAttackHitStruct.Damage = GetHitboxDamage();
 
 					NewAttackHitStruct.bIsLauncher = GetbIsLauncher();
+					NewAttackHitStruct.hitReaction = GetHitReactionType();
 					
 					ISB_DamagableInterface::Execute_Damage(OtherActor, NewAttackHitStruct, HitResult); //We're copying the hitresult again here. Not sure if this is the best idea
 					HitboxGroupRef->HitRef.Add(OtherActor);
@@ -128,7 +129,7 @@ void ASB_Hitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 float ASB_Hitbox::GetHitboxDamage()
 {
 	return AttackData->HitboxDamageInfos[CurrentDamageIndex].DamageAmount;
-	//Perhaps I just do that the damage is copied from the attackdata when hitbox is created rather than having to dig deep for this info all the time
+	//Perhaps I just do that the getter return values are copied from the attackdata when hitbox is instantiated rather than having to dig deep in an array for this info all the time.
 }
 
 FVector ASB_Hitbox::GetKnockbackDirection()
@@ -144,6 +145,11 @@ float ASB_Hitbox::GetKnockbackScalar()
 bool ASB_Hitbox::GetbIsLauncher()
 {
 	return AttackData->HitboxDamageInfos[CurrentDamageIndex].bIsLauncher;
+}
+
+TEnumAsByte<HitReaction> ASB_Hitbox::GetHitReactionType()
+{
+	return AttackData->HitboxDamageInfos[CurrentDamageIndex].hitReaction;
 }
 
 // Called when the game starts or when spawned

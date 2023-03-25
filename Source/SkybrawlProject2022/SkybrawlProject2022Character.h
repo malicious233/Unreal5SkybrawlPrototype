@@ -38,10 +38,11 @@ public:
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUsedSignature);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUsedSignatureOneParam, EButtonInput, ButtonInput);
-
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnUsedSignatureTwoParam, FSB_AttackHit, AttackHitResult, FHitResult, HitResult);
+	
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FOnUsedSignature OnDamage;
+	FOnUsedSignatureTwoParam OnDamaged;
 	
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FOnUsedSignatureOneParam OnInput; //On any bufferable action input

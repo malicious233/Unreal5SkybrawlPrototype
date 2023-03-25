@@ -66,8 +66,15 @@ public:
 	UFUNCTION(BlueprintPure)
 	float GetKnockbackScalar();
 
+	/**
+	 * @brief Get if this hitbox is a launcher, though this will become deprecated and replaced with 'GetHitReactionType()'
+	 * @return 
+	 */
 	UFUNCTION(BlueprintPure)
 	bool GetbIsLauncher();
+
+	UFUNCTION(BlueprintPure)
+	TEnumAsByte<HitReaction> GetHitReactionType();
 	
 	
 protected:

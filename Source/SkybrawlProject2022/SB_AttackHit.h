@@ -7,7 +7,7 @@
 #include "SB_AttackHit.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum HitReaction
 {
 	Standard, //Standard hitstun
