@@ -23,6 +23,7 @@ void USB_FiniteStatemachineComponent::SetState(USB_FSMState* ToState)
 		CurrentState->Exit();
 		CurrentState->OnExit.Broadcast();
 	}
+	
 	CurrentState = ToState;
 	
 	OnAnyStateEnter.Broadcast();
@@ -30,6 +31,18 @@ void USB_FiniteStatemachineComponent::SetState(USB_FSMState* ToState)
 	CurrentState->OnEnter.Broadcast();
 	OnAnyStateEnterLate.Broadcast();
 	
+}
+
+void USB_FiniteStatemachineComponent::SetStateNoExit(USB_FSMState* ToState)
+{
+	OnAnyStateExit.Broadcast();
+	
+	CurrentState = ToState;
+	
+	OnAnyStateEnter.Broadcast();
+	CurrentState->Enter();
+	CurrentState->OnEnter.Broadcast();
+	OnAnyStateEnterLate.Broadcast();
 }
 
 USB_FSMState* USB_FiniteStatemachineComponent::GetState()

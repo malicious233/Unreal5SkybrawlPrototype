@@ -27,6 +27,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetState(USB_FSMState* ToState);
 
+	/**
+	 * @brief WIP (or potentially deprecated) function that switches state without calling its own Exit function. Used when called inside of State exit functions to avoid infinite function calls
+	 * @param ToState 
+	 */
+	UFUNCTION()
+	void SetStateNoExit(USB_FSMState* ToState);
+
 	UFUNCTION(BlueprintPure)
 	USB_FSMState* GetState();
 
@@ -52,4 +59,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
+
+private:
+	/**
+	 * @brief Variable used to skip the State exit function call on Statechange to avoid an infinite loop if you attempt to call
+	 * a statechange in a state exit.
+	 */
+	bool bIsStateChangePending;
 };
