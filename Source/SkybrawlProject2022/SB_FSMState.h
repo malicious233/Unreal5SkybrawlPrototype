@@ -43,7 +43,7 @@ public:
 	/**
 	 *
 	 * @brief Broadcasted every tick, gives delta time.
-	 * Potentially unperformant as it runs assigned blueprint events each tick. If it becomes a performance issue we can replace it with a overridden C++ events
+	 * Potentially unperformant as it runs assigned blueprint events each tick. If it becomes a performance issue we can replace the more poorly performant states with overridden C++ events/functions
 	 */
 	UPROPERTY(BlueprintAssignable)
 	FOnUsedSignatureOneParam OnTick;
