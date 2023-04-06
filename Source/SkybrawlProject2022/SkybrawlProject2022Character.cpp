@@ -87,6 +87,7 @@ void ASkybrawlProject2022Character::SetupPlayerInputComponent(class UInputCompon
 
 void ASkybrawlProject2022Character::TurnAtRate(float Rate)
 {
+	
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * TurnRateGamepad * GetWorld()->GetDeltaSeconds());
 }
@@ -129,7 +130,6 @@ void ASkybrawlProject2022Character::BeginPlay()
 
 void ASkybrawlProject2022Character::Tick(float DeltaSeconds)
 {
-
 	//Tick buffer
 	LastInputBuffer -= DeltaSeconds;
 	
